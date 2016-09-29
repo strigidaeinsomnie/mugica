@@ -22,7 +22,7 @@ for content in folder_metadata['contents']  :
     remotefiles.append(content['path'])
 
 for tarfile in remotefiles :
-    f, metadata = client.get_file_and_metadata('[0]'.format(tarfile))
+    f, metadata = client.get_file_and_metadata(tarfile)
     out = open('tarfile', 'wb')
     out.write(f.read())
     out.close()
