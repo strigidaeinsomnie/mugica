@@ -23,6 +23,6 @@ for content in folder_metadata['contents']  :
 
 for tarfile in remotefiles :
     f, metadata = client.get_file_and_metadata(tarfile)
-    out = open('tarfile', 'wb')
+    out = open(tarfile, 'wb')
     out.write(f.read())
     out.close()
