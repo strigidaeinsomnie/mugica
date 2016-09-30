@@ -62,9 +62,8 @@ def drop_is_lake(tardir_drop, tardir_lake) :
 def lake_play(tardir_lake) :
     lake_list_play = lake_list(tardir_lake)
 
-    while True :
-        for lake_play in lake_list_play :
-            os.system('mpg123  {0}'.format(lake_play))
+    for lake_play in lake_list_play :
+        os.system('mpg123  {0}'.format(lake_play))
 
 #-----------------------------------
 
