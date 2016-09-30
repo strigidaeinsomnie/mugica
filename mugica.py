@@ -1,28 +1,69 @@
 import dropbox
+import glob
+import os
 
-app_key = 'a7a2uzsk54m2rvw'
-app_secret = 'hx2zhh7gweo1qlv'
+#----------------------------------
 
-flow = dropbox.client.DropboxOAuth2FlowNoRedirect(app_key, app_secret)
+access_token = 'k2Al7W0a9SAAAAAAAAAALKqbdiL0Vr73rPreN4Pl760unofPADYeX2-lj2A5ei5S'
 
-authorize_url = flow.start()
-print('1. Go to: ' + authorize_url)
-print('2. Click "Allow" (you might have to log in first)')
-print('3. Copy the authorization code.')
-code = input("Enter the authorization code here: ").strip()
+tardir_drop = '/mugicaData'
+tardir_lake = 'mugicaData'
 
-access_token, user_id = flow.finish(code)
+#----------------------------------
 
-client = dropbox.client.DropboxClient(access_token)
+def drop_authorize(access_token) :
+    client = dropbox.client.DropboxClient(access_token)
 
-folder_metadata = client.metadata('/mugica')
 
-remotefiles = []
-for content in folder_metadata['contents']  :
-    remotefiles.append(content['path'])
+def drop_list(tardir) :
+    folder_metadata = client.metadata(tardir)
 
-for tarfile in remotefiles :
+    drop_files = []
+    for content in folder_metadata['contents']  :
+        drop_path = content['path']
+        drop_name = drop_path[filename.rfind('/') + 1 :]
+        drop_files.append(drop_name)
+
+    return drop_files
+
+
+def lake_list(tardir_lake) :
+    lake_files = glob.glob('{0}/*'.format(tardir_lake))
+    return lake_files
+
+
+def drop_down(tarfile) :
     f, metadata = client.get_file_and_metadata(tarfile)
     out = open(tarfile, 'wb')
     out.write(f.read())
     out.close()
+
+
+def drop_is_lake(tardir_drop, tardir_lake) :
+    drop_files = drop_list(tardir_drop)
+    lake_files = lake_list(tardir_lake)
+
+    set_drop_files = set(drop_files)
+    set_lake_files = set(lake_files)
+
+    for drop in set_drop_files :
+        if drop not in set_lake_files :
+            drop_down('{0}/{1}'.format(tardir_drop, drop)
+
+
+    for lake in set_lake_files :
+        if lake not in set_drop_files :
+            os.system('rm {0}/{1}'.format(tardir_lake, lake))
+
+
+def lake_play(tardir_lake) :
+    lake_list_play = lake_list(tardir_lake)
+
+    for lake_play in lake_list_play :
+        os.system('mpg123  {0}/{1}'.format(tardir_lake, lake_play))
+
+#-----------------------------------
+
+drop_authorize(access_token)
+drop_is_lake(tardir_drop, tardir_lake)
+lake_play(tardir_lake)
