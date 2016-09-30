@@ -37,8 +37,8 @@ def drop_down(tarfile) :
     client = drop_authorize(access_token)
     f, metadata = client.get_file_and_metadata(tarfile)
 
-    tarfile.replace('/', '', 1)
-    out = open(tarfile, 'wb')
+    lake_name = tarfile.replace('/', '', 1)
+    out = open(lake_name, 'wb')
     out.write(f.read())
     out.close()
 
