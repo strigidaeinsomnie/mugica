@@ -22,7 +22,7 @@ def drop_list(tardir_drop) :
     drop_files = []
     for content in folder_metadata['contents']  :
         drop_path = content['path']
-        drop_name = drop_path[filename.rfind('/') + 1 :]
+        drop_name = drop_path[drop_path.rfind('/') + 1 :]
         drop_files.append(drop_name)
 
     return drop_files
