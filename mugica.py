@@ -13,10 +13,11 @@ tardir_lake = 'mugicaData'
 
 def drop_authorize(access_token) :
     client = dropbox.client.DropboxClient(access_token)
+    return client
 
-
-def drop_list(tardir) :
-    folder_metadata = client.metadata(tardir)
+def drop_list(tardir_drop) :
+    client = drop_authorize(access_token)
+    folder_metadata = client.metadata(tardir_drop)
 
     drop_files = []
     for content in folder_metadata['contents']  :
@@ -33,6 +34,7 @@ def lake_list(tardir_lake) :
 
 
 def drop_down(tarfile) :
+    client = drop_authorize(access_token)
     f, metadata = client.get_file_and_metadata(tarfile)
     out = open(tarfile, 'wb')
     out.write(f.read())
@@ -48,8 +50,7 @@ def drop_is_lake(tardir_drop, tardir_lake) :
 
     for drop in set_drop_files :
         if drop not in set_lake_files :
-            drop_down('{0}/{1}'.format(tardir_drop, drop)
-
+            drop_down('{0}/{1}'.format(tardir_drop, drop))
 
     for lake in set_lake_files :
         if lake not in set_drop_files :
