@@ -67,6 +67,11 @@ def lake_play(tardir_lake) :
 
 #-----------------------------------
 
-drop_authorize(access_token)
-drop_is_lake(tardir_drop, tardir_lake)
-lake_play(tardir_lake)
+web = os.system('ping -c 5 google.com')
+
+if web is 0 :
+    drop_authorize(access_token)
+    drop_is_lake(tardir_drop, tardir_lake)
+
+while True :
+    lake_play(tardir_lake)
