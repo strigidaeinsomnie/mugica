@@ -50,13 +50,13 @@ def drop_is_lake(tardir_drop, tardir_lake) :
     set_drop_files = set(drop_files)
     set_lake_files = set(lake_files)
 
-    for drop in set_drop_files :
-        if drop not in set_lake_files :
-            drop_down('{0}/{1}'.format(tardir_drop, drop))
-
     for lake in set_lake_files :
         if lake not in set_drop_files :
             os.system('rm {0}'.format(lake))
+
+    for drop in set_drop_files :
+        if drop not in set_lake_files :
+            drop_down('{0}/{1}'.format(tardir_drop, drop))
 
 
 def lake_play(tardir_lake) :
